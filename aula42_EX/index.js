@@ -21,4 +21,6 @@ function VerificadorBuzzFizz (num){
     }
 }
 
-console.log(VerificadorBuzzFizz(15))
+for (let i = 0; i <= 100; i++){
+    console.log(i, VerificadorBuzzFizz(i))
+}
