@@ -7,7 +7,6 @@ function Timer() {
   let timer = 0; // tempo em ms
   let estaIniciado = true
   let naoDuplicar = true
-  let zerarNoBreak = false
 
   function atualizarDisplay() {
     relogio.innerHTML = formatarTempo(timer);
