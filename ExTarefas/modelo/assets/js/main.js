@@ -7,9 +7,29 @@ function Anotar() {
   const anotacoesSalvas = JSON.parse(localStorage.getItem('anotacoes')) || [];
   anotacoesSalvas.forEach(texto => criarAnotacao(texto));
 
-  buttonAnotacao.addEventListener('click', function () {
+  function LimpaTarefa (input){
+    input.value = ''
+    input.focus()
+  }
+
+  adicionarAnotacao.addEventListener('keydown', function(e){
+    if (e.key === 'Enter'){
+      const anotacaoText = adicionarAnotacao.value.trim();
+      if (!anotacaoText) return;
+
+      criarAnotacao(anotacaoText);
+
+      // 🔹 Salva no localStorage
+      anotacoesSalvas.push(anotacaoText);
+      localStorage.setItem('anotacoes', JSON.stringify(anotacoesSalvas));
+
+      LimpaTarefa(adicionarAnotacao) // limpa o input
+    }
+  });
+
+  buttonAnotacao.addEventListener('click', function(e){
     const anotacaoText = adicionarAnotacao.value.trim();
-    if (anotacaoText === '') return;
+    if (!anotacaoText) return;
 
     criarAnotacao(anotacaoText);
 
@@ -17,7 +37,7 @@ function Anotar() {
     anotacoesSalvas.push(anotacaoText);
     localStorage.setItem('anotacoes', JSON.stringify(anotacoesSalvas));
 
-    adicionarAnotacao.value = ''; // limpa o input
+    LimpaTarefa(adicionarAnotacao) // limpa o input
   });
 
   function criarAnotacao(texto) {
