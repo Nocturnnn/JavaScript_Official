@@ -29,6 +29,30 @@
     button.addEventListener("click", () => Foco());
   });
 
+  function AdicionaContas(valor) {
+    num.value += valor;
+  }
+
+  buttons.forEach((button) => {
+    if (
+      !isNaN(button.innerHTML) ||
+      button.innerHTML === "+" ||
+      button.innerHTML === "-" ||
+      button.innerHTML === "." ||
+      button.innerHTML === "%"
+    ) {
+      button.addEventListener("click", () => AdicionaContas(button.innerHTML));
+    }
+
+    if (button.innerHTML === "×") {
+      button.addEventListener("click", () => AdicionaContas("*"));
+    }
+
+    if (button.innerHTML === "÷") {
+      button.addEventListener("click", () => AdicionaContas("/"));
+    }
+  });
+
   function Clear() {
     num.value = "";
   }
@@ -41,12 +65,11 @@
 
   function Plusminus() {
     for (let i in num.value) {
-      if (
-        isNaN(num.value[i]) &&
-        (i !== 0 && num.value[i] !== '-')
-      ) {
-        alert("Todos os digitos devem ser números válidos");
-        return;
+      if (num.value[i] !== ".") {
+        if (isNaN(num.value[i]) && i !== 0 && num.value[i] !== "-") {
+          alert("Todos os digitos devem ser números válidos");
+          return;
+        }
       }
     }
     num.value = Number(num.value) * -1;
