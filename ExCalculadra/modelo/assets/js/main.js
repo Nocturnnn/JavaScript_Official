@@ -4,9 +4,34 @@
   const clearButton = document.querySelector('button[data-action="clear"]');
   const backspace = document.querySelector('button[data-action="backspace"]');
   const plusminus = document.querySelector('button[data-action="plusminus"]');
+  const enter = document.querySelector('button[data-action="equals"]')
+  const percent = document.querySelector('button[data-action="percent"]')
+
+  function calcular() {
+    let conta = num.value;
+
+    // Permite apenas números e operadores básicos
+    if (!/^[0-9+\-*/().% ]+$/.test(conta)) {
+      num.value = "Erro";
+      return;
+    }
+
+    // Troca 50% por (50/100)
+    conta = conta.replace(/(\d+)%/g, "($1/100)");
+
+    try {
+      num.value = eval(conta);
+    } catch {
+      num.value = "Erro";
+    }
+  }
+
+  function Enter() {
+    calcular()
+  }
+  enter.addEventListener("click", () => Enter());
 
   function Foco() {
-    // detector de conta invalida
     /* colocar no enter
     for (let i in num.value) {
       console.log(num.value[i], num.value.length - 1);
@@ -38,8 +63,7 @@
       !isNaN(button.innerHTML) ||
       button.innerHTML === "+" ||
       button.innerHTML === "-" ||
-      button.innerHTML === "." ||
-      button.innerHTML === "%"
+      button.innerHTML === "."
     ) {
       button.addEventListener("click", () => AdicionaContas(button.innerHTML));
     }
@@ -75,4 +99,9 @@
     num.value = Number(num.value) * -1;
   }
   plusminus.addEventListener("click", () => Plusminus());
+
+  percent.addEventListener("click", () => {
+    num.value += '%'
+    calcular()
+  });
 })();
